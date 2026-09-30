@@ -1,0 +1,8 @@
+{
+  "name": "PrimeProfile - Creator Monetization & Bio Store Platform",
+  "description": "All-in-one monetization platform for creators: link-in-bio store, digital products, payment pages, courses, 1:1 bookings, events, lead magnets and analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

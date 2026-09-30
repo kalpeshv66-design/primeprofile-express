@@ -431,22 +431,14 @@ app.get('/api/payouts/history', (req: Request, res: Response) => {
 // VITE DEV SERVER OR PRODUCTION STATIC SERVING
 // -------------------------------------------------------------
 async function startServer() {
-  const isProduction = process.env.NODE_ENV === 'production';
-
-  if (!isProduction) {
-    // Development mode with Vite Middleware
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
-    });
-    app.use(vite.middlewares);
-  } else {
-    // Production mode: Serve built assets from dist
-    app.use(express.static(path.resolve(__dirname, 'dist')));
-    app.get('*', (_req: Request, res: Response) => {
-      res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
-    });
-  }
+  // Hostinger's Express ZIP deployment does not expose a separate Vite build step.
+  // Run Vite in middleware mode so React, Tailwind CSS and assets are transformed
+  // and served correctly without requiring a prebuilt dist directory.
+  const vite = await createViteServer({
+    server: { middlewareMode: true },
+    appType: 'spa',
+  });
+  app.use(vite.middlewares);
 
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`[PrimeProfile Server] Running on http://0.0.0.0:${PORT}`);

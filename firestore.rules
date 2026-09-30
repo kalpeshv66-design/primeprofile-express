@@ -1,0 +1,78 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Profiles: public read so public bio stores can be loaded by anyone, write by owner
+    match /creators/{creatorId} {
+      allow read: if true;
+      allow write: if isOwner(creatorId);
+      
+      // Subcollections
+      match /links/{linkId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /products/{productId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /payment_pages/{pageId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /courses/{courseId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /bookings/{bookingId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /events/{eventId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /lead_magnets/{magnetId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /locked_content/{contentId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /communities/{communityId} {
+        allow read: if true;
+        allow write: if isOwner(creatorId);
+      }
+      match /audiences/{audienceId} {
+        allow read: if isOwner(creatorId);
+        allow create: if true; // anyone can submit lead magnet or checkout contact
+        allow update, delete: if isOwner(creatorId);
+      }
+      match /orders/{orderId} {
+        allow read: if isOwner(creatorId);
+        allow create: if true; // public checkout creates order
+        allow update, delete: if isOwner(creatorId);
+      }
+      match /analytics_events/{eventId} {
+        allow read: if isOwner(creatorId);
+        allow create: if true; // public visits/clicks
+        allow update, delete: if isOwner(creatorId);
+      }
+    }
+
+    // Direct username lookup collection
+    match /usernames/{username} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+  }
+}

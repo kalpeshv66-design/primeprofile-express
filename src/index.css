@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@800;900&family=Plus+Jakarta+Sans:ital,wght@0,800;0,900;1,800;1,900&family=Syne:wght@800;900&display=swap');
+@import "tailwindcss";
+
+@keyframes prime-shimmer {
+  0% {
+    transform: translateX(-150%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(250%) rotate(25deg);
+  }
+}
+
+@keyframes prime-pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.45)) drop-shadow(0 0 14px rgba(99, 102, 241, 0.25));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 22px rgba(99, 102, 241, 0.55));
+    transform: scale(1.03);
+  }
+}
+
+@keyframes prime-sparkle-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(0.9);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate(1px, -1.5px) scale(1.25);
+    opacity: 1;
+    filter: drop-shadow(0 0 4px #fef08a);
+  }
+}
+
+@keyframes prime-gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
